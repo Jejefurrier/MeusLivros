@@ -9,6 +9,11 @@ namespace MeusLivros.Models
 {
     public class User
     {
+        public User()
+        {
+
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

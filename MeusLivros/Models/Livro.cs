@@ -9,6 +9,11 @@ namespace MeusLivros.Models
 {
     public class Livro
     {
+        public Livro()
+        {
+
+        }
+
         [Key]
         public int ID { get; set; }
         [ForeignKey("User")]
