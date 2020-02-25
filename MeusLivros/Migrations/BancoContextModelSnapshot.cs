@@ -24,20 +24,28 @@ namespace MeusLivros.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Autor")
+                        .IsRequired()
+                        .HasColumnName("Autor")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("IDDono")
-                        .HasColumnType("int");
+                        .HasColumnName("IDDono")
+                        .HasColumnType("int")
+                        .IsUnicode(true);
 
                     b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnName("Link")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnName("Nome")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Livros");
+                    b.ToTable("Livro");
                 });
 
             modelBuilder.Entity("MeusLivros.Models.User", b =>
@@ -47,22 +55,28 @@ namespace MeusLivros.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataIncricao")
+                        .HasColumnName("DataIncricao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnName("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnName("Role")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnName("Username")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .IsUnicode(true);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 #pragma warning restore 612, 618
         }
