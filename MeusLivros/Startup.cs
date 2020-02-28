@@ -33,10 +33,6 @@ namespace MeusLivros
         {
             services.AddDbContext<BancoContext>(opt => {
                 opt.UseMySql(ConnectionString.conn);
-
-
-
-
             });
             services.AddCors();
             services.AddControllers();
