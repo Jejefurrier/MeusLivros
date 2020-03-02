@@ -15,14 +15,12 @@ namespace MeusLivros.Database
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Livro> Livros { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>(new UserMap().Configure);
-            modelBuilder.Entity<Livro>(new LivroMap().Configure);
         }
 
     }

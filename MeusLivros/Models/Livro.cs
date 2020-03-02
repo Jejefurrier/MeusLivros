@@ -17,8 +17,8 @@ namespace MeusLivros.Models
         [Key]
         public int ID { get; set; }
         [ForeignKey("User")]
-        public int IDDono { get; set; }
-        public string Autor { get; set; }
+        public string NomeDono { get; set; }
+        public List<string?> Autor { get; set; }
         public string Nome { get; set; }
         public string Link { get; set; }
 

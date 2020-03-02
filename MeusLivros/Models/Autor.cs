@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace MeusLivros.Models
 {
-    public class Teste
+    public class Autor
     {
-        public int id { get; set; }
+        public int ID { get; set; }
+        public int IDLivro { get; set; }
         public string Nome { get; set; }
 
     }
