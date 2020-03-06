@@ -55,18 +55,26 @@ namespace MeusLivros.Controllers
             var primeiraclaim = claims.FirstOrDefault();
             var Name = primeiraclaim.Value;
 
+            if (livro.ImgBase64 == null)
+                livro.ImgBase64 = "0";
+
             livro.NomeDono = Name;
-            //livro.IDDono = user.Id;
-            //_banco.
+            
+            //Livro.SaveImage
+
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnectionString.conn))
                 {
-                    conn.Query($"INSERT INTO Livro (NomeDono, Nome, Link) VALUES ('{livro.NomeDono}', '{livro.Nome}', '{livro.Link}');");
-                    var a = conn.Query<int>("SELECT MAX(ID) AS ID FROM Livro");
-                    int id = int.Parse(a.FirstOrDefault().ToString());
+                    var a = conn.Query<int>("SELECT MAX(ID) AS ID FROM Livro");//|Pegam o maior
+                    int id = int.Parse(a.FirstOrDefault().ToString());//         |ID existente
+                    id++;//                                                      |e adiciona +1 (pra ver qual vai ser o ID do proximo item a ser inserido
 
-                    foreach (var item in livro.Autor)
+                    var imgUrl = Livro.SaveImage(livro.ImgBase64, id.ToString()); 
+
+                    conn.Query($"INSERT INTO Livro (NomeDono, Nome, Link, UrlImagem) VALUES ('{livro.NomeDono}', '{livro.Nome}', '{livro.Link}', '{imgUrl}');");
+
+                    foreach (var item in livro.Autor)//pra cada autor na lista, ele salva na tabela Autores
                     {
                         conn.Query($"INSERT INTO Autores (IDLivro, Nome) VALUES ({id}, '{item}')");
                     }
@@ -77,35 +85,6 @@ namespace MeusLivros.Controllers
             {
 
                 return BadRequest(ex.ToString()); 
-            }
-        }
-
-        [HttpPost]
-        public async Task<string> UploadImage(IFormFile files)
-        {
-            if (files.Length > 0)
-            {
-                try
-                {
-                    if (!Directory.Exists(_environment.WebRootPath + "\\uploads\\"))
-                    {
-                        Directory.CreateDirectory(_environment.WebRootPath + "\\uploads\\");
-                    }
-                    using (FileStream filestream = System.IO.File.Create(_environment.WebRootPath + "\\uploads\\" + files.files.FileName))
-                    {
-                        files.CopyTo(filestream);
-                        filestream.Flush();
-                        return "\\uploads\\" + files.FileName;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return ex.ToString();
-                }
-            }
-            else
-            {
-                return "Unsuccessful";
             }
         }
 
